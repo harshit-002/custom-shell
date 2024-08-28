@@ -20,6 +20,7 @@ validCommands isValid(string command){
   if(command == "exit") return validCommands::exit0;
   if(command == "type") return validCommands::type;
 
+  // find program in PATH
   return invalid;
 }
 
@@ -77,7 +78,19 @@ int main()
         }
         break;
       default:
-        std::cout<<input<<": command not found\n";
+        // std::cout<<input<<": command not found\n";
+        // find program and execute using system
+        string command = input.substr(0,input.find(" "));
+        string path = get_path(command);
+        if(path.empty()){
+          std::cout<<input<<": command not found\n";
+        }
+        else{
+          string command_with_full_path = path + input.substr(command.length());  // full = path arguments
+
+          const char *command_ptr = command_with_full_path.c_str();
+          system(command_ptr);
+        }
         break;
     }
   }
