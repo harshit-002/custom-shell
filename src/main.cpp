@@ -10,6 +10,7 @@ enum validCommands {
   cd,
   exit0,
   type,
+  pwd,
   invalid
 };
 validCommands isValid(string command){
@@ -19,12 +20,14 @@ validCommands isValid(string command){
   if(command == "cd") return validCommands::cd;
   if(command == "exit") return validCommands::exit0;
   if(command == "type") return validCommands::type;
+  if(command == "pwd") return validCommands::pwd;
 
   // find program in PATH
   return invalid;
 }
 
-std::string valid[4] = {"echo", "cd", "exit0"};
+std::string valid[5] = {"echo", "cd", "exit0", "type", "pwd"};
+std::string cwd = std::filesystem::current_path().string();
 
 std::string get_path(const std::string command){
   //PATH="/usr/bin:/usr/local/bin" ./your_program.sh
@@ -61,6 +64,9 @@ int main()
         break;
       case exit0:
         exit = true;
+        break;
+      case pwd:
+        std::cout<<cwd<<endl;
         break;
       case type:
         input.erase(0,input.find(" ")+1);
