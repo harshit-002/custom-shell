@@ -9,7 +9,7 @@ int main()
   std::cerr << std::unitbuf;
 
   std:: map<string,string> inBuiltCommands = {{"echo","echo is a shell builtin"},
-      {"exit","exit is a shell builtin"},{"cat","cat is /bin/cat"}};
+      {"exit","exit is a shell builtin"},{"cat","cat is /bin/cat"},{"type","type is a shell builtin"}};
 
   while(true){
     std::cout << "$ ";
