@@ -27,12 +27,15 @@ int main()
       if(commandCat=="echo"){
         std::cout<<commandText<<endl;
       }
-
-      if(commandCat=="type"){
+      else if(commandCat=="type"){
         if(inBuiltCommands.find(commandText)!=inBuiltCommands.end())
           std::cout<<inBuiltCommands[commandText]<<endl;
         else std::cout<<commandText<<": not found"<<endl;
       }
+      else{
+        std::cout << command << ": command not found" << std::endl;
+      }
+
     }
     else
     std::cout << command << ": command not found" << std::endl;
