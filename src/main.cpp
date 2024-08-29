@@ -6,6 +6,18 @@
 using namespace std;
 namespace fs = std::filesystem;
 
+void displayWelcomeMessage() {
+    std::cout << R"(
+________  ________  ________  ___  ___          ___       ___  _________  _______      
+|\   __  \|\   __  \|\   ____\|\  \|\  \        |\  \     |\  \|\___   ___\\  ___ \     
+\ \  \|\ /\ \  \|\  \ \  \___|\ \  \\\  \       \ \  \    \ \  \|___ \  \_\ \   __/|    
+ \ \   __  \ \   __  \ \_____  \ \   __  \       \ \  \    \ \  \   \ \  \ \ \  \_|/__  
+  \ \  \|\  \ \  \ \  \|____|\  \ \  \ \  \       \ \  \____\ \  \   \ \  \ \ \  \_|\ \ 
+   \ \_______\ \__\ \__\____\_\  \ \__\ \__\       \ \_______\ \__\   \ \__\ \ \_______\
+    \|_______|\|__|\|__|\_________\|__|\|__|        \|_______|\|__|    \|__|  \|_______|
+                       \|_________|                                                     )" << std::endl;
+}
+
 enum validCommands { 
   echo,
   cd,
@@ -23,7 +35,6 @@ validCommands isValid(string command){
   if(command == "type") return validCommands::type;
   if(command == "pwd") return validCommands::pwd;
 
-  // find program in PATH
   return invalid;
 }
 
@@ -54,7 +65,7 @@ void chdir(std::string dir){
 
 int main()
 {
-  // Flush after every std::cout / std:cerr
+  displayWelcomeMessage();
   bool exit = false;
   while(!exit){
     std::cout << std::unitbuf;
