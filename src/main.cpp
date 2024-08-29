@@ -44,6 +44,14 @@ std::string get_path(const std::string command){
   return "";    // Return empty string if command not found in PATH
 }
 
+void chdir(std::string dir){
+  fs::path newDirectory(dir);
+  if(fs::is_directory(newDirectory)){
+    fs::current_path(newDirectory);        // set current path to dir
+  }
+  else cout<<"cd: "<<dir<<": No such file or directory\n";
+}
+
 int main()
 {
   // Flush after every std::cout / std:cerr
@@ -59,15 +67,12 @@ int main()
       case cd:
         {
           string dirStr = input.substr(input.find(" ")+1);  
-          std::filesystem::path newDirectory(dirStr); 
-          
-          if(std::filesystem::is_directory(newDirectory)){
-            std::filesystem::current_path(newDirectory);   // set current path to dir
+          if(dirStr=="~"){
+            const char* homeDir_cStr = std::getenv("HOME");   // gives home directory
+            std::string homeDir(homeDir_cStr);
+            chdir(homeDir);
           }
-          else{
-            cout<<"cd: "<<dirStr<<": No such file or directory\n";
-          }
-          
+          else chdir(dirStr);
           break;
         }
       case echo:
@@ -96,7 +101,6 @@ int main()
         }
         break;
       default:
-        // std::cout<<input<<": command not found\n";
         // find program and execute using system
         string command = input.substr(0,input.find(" "));
         string path = get_path(command);
@@ -104,7 +108,7 @@ int main()
           std::cout<<input<<": command not found\n";
         }
         else{
-          string command_with_full_path = path + input.substr(command.length());  // full = path arguments
+          string command_with_full_path = path + input.substr(command.length());  // full = path+(space)+arguments
 
           const char *command_ptr = command_with_full_path.c_str();
           system(command_ptr);
