@@ -4,6 +4,7 @@
 #include <filesystem>
 
 using namespace std;
+namespace fs = std::filesystem;
 
 enum validCommands { 
   echo,
@@ -27,7 +28,6 @@ validCommands isValid(string command){
 }
 
 std::string valid[5] = {"echo", "cd", "exit0", "type", "pwd"};
-std::string cwd = std::filesystem::current_path().string();
 
 std::string get_path(const std::string command){
   //PATH="/usr/bin:/usr/local/bin" ./your_program.sh
@@ -57,13 +57,19 @@ int main()
 
     switch(isValid(input)){
       case cd:
-        input.erase(0,input.find(" ")+1);   
-        if(!input.empty()){
-          // cout<<"pathtogo: "<<input<<endl;
-          const char* command_ptr = input.c_str();
-          system(command_ptr);
+        {
+          string dirStr = input.substr(input.find(" ")+1);  
+          std::filesystem::path newDirectory(dirStr); 
+          
+          if(std::filesystem::is_directory(newDirectory)){
+            std::filesystem::current_path(newDirectory);   // set current path to dir
+          }
+          else{
+            cout<<"cd: "<<dirStr<<": No such file or directory\n";
+          }
+          
+          break;
         }
-        break;
       case echo:
         input.erase(0,input.find(" ")+1);
         std::cout<<input<<"\n";
@@ -72,7 +78,7 @@ int main()
         exit = true;
         break;
       case pwd:
-        std::cout<<cwd<<endl;
+        std::cout<<fs::current_path().string()<<endl;
         break;
       case type:
         input.erase(0,input.find(" ")+1);
