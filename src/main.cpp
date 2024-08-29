@@ -57,6 +57,12 @@ int main()
 
     switch(isValid(input)){
       case cd:
+        input.erase(0,input.find(" ")+1);   
+        if(!input.empty()){
+          // cout<<"pathtogo: "<<input<<endl;
+          const char* command_ptr = input.c_str();
+          system(command_ptr);
+        }
         break;
       case echo:
         input.erase(0,input.find(" ")+1);
@@ -100,5 +106,4 @@ int main()
         break;
     }
   }
-
 }
