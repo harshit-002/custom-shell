@@ -45,8 +45,8 @@ std::string get_path(const std::string command){
 }
 
 void chdir(std::string dir){
-  fs::path newDirectory(dir);
-  if(fs::is_directory(newDirectory)){
+  fs::path newDirectory(dir);               // convert std::string to fs::path
+  if(fs::is_directory(newDirectory)){   
     fs::current_path(newDirectory);        // set current path to dir
   }
   else cout<<"cd: "<<dir<<": No such file or directory\n";
