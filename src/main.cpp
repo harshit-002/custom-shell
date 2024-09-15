@@ -14,7 +14,7 @@ std::vector<std::string> history = {
     "echo",
     "type",
     "mkdir",
-    "exit0",
+    "exit",
 };
 
 // Set the terminal in raw mode
@@ -45,6 +45,21 @@ ________  ________  ________  ___  ___          ___       ___  _________  ______
             << std::endl;
 }
 
+void display_help()
+{
+  std::cout << "Welcome to BashLite! Here are some basic commands you can use:\n";
+  std::cout << "  cd [directory]   : Change the current directory to [directory]\n";
+  std::cout << "  pwd              : Print the current working directory\n";
+  std::cout << "  echo [message]   : Display [message] on the terminal\n";
+  std::cout << "  type [command]   : Display the type of [command]\n";
+  std::cout << "  exit             : Exit the shell\n";
+  std::cout << "  help             : Show this help message\n";
+  std::cout << "  ls               : List directory contents\n";
+  std::cout << "  mkdir [dir]      : Create a directory named [dir]\n";
+  std::cout << "  rm [file/dir]    : Remove file or directory\n";
+  std::cout << "  touch [file]     : Create a file named [file]\n";
+}
+
 enum validCommands
 {
   echo,
@@ -55,6 +70,7 @@ enum validCommands
   invalid,
   help
 };
+
 validCommands isValid(string command)
 {
   command = command.substr(0, command.find(" "));
@@ -69,6 +85,8 @@ validCommands isValid(string command)
     return validCommands::type;
   if (command == "pwd")
     return validCommands::pwd;
+  if (command == "help")
+    return validCommands::help;
 
   return invalid;
 }
@@ -125,7 +143,7 @@ int main()
   tcgetattr(STDIN_FILENO, &original); // Get the terminal attributes
 
   enableRawMode(original); // Enable raw mode
-  // displayWelcomeMessage();
+  displayWelcomeMessage();
   bool exit = false;
   char ch;
   std::string last_suggestion;
@@ -214,6 +232,9 @@ int main()
 
     switch (isValid(input))
     {
+    case help:
+      display_help();
+      break;
     case cd:
     {
       string dirStr = input.substr(input.find(" ") + 1);
