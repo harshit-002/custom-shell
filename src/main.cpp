@@ -146,7 +146,7 @@ void getGeminiApiResponse(const std::string &prompt)
 
   if (curl)
   {
-    std::string apiKey = "AIzaSyBFtk-JfZj7hl4Bbt89u0oM0EWMoHhaTxA";
+    std::string apiKey = getenv("apiKey");
     std::string url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=" + apiKey;
 
     // Setup the URL and HTTP headers
