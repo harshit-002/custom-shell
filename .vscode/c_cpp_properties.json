@@ -3,7 +3,10 @@
         {
             "name": "Win32",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/cpr/include",
+                "/usr/include/nlohmann",
+                "${workspaceFolder}/build/_deps/curl-src/include"
             ],
             "defines": [
                 "_DEBUG",
